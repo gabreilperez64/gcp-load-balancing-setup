@@ -227,6 +227,53 @@ gcloud compute forwarding-rules create http-forwarding-rule-test-site \
 
 -----
 
+## Automated Deployment Options
+
+You can now deploy this entire infrastructure automatically using either a Bash script or Terraform.
+
+### Option A: Bash Script (gcloud)
+
+A deployment script is provided in the `scripts/` directory. It uses the `gcloud` CLI to create all resources sequentially.
+
+1.  **Configure your variables:**
+    Open `scripts/deploy.sh` and edit the variables at the top, or set them as environment variables:
+    ```bash
+    export ZONE="us-east1-c"
+    export VM_NAME="your-windows-vm"
+    export DOMAIN="example.com"
+    ```
+
+2.  **Run the script:**
+    ```bash
+    chmod +x scripts/deploy.sh
+    ./scripts/deploy.sh
+    ```
+
+### Option B: Terraform
+
+For a more robust and manageable infrastructure, use the Terraform configuration provided in the `terraform/` directory.
+
+1.  **Initialize Terraform:**
+    ```bash
+    cd terraform
+    terraform init
+    ```
+
+2.  **Create a `terraform.tfvars` file:**
+    ```hcl
+    project_id  = "your-project-id"
+    vm_name     = "your-windows-vm"
+    domain_name = "example.com"
+    zone        = "us-east1-c" # Optional
+    ```
+
+3.  **Apply the configuration:**
+    ```bash
+    terraform apply
+    ```
+
+-----
+
 ## Step 6: Update DNS Records
 
 This is the final mandatory step to make your site live. This is done at your domain registrar, not in GCP.
